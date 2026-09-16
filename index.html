@@ -5,25 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fluxograma de Aconselhamento na Menopausa</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f6f8;
+        }
+        body {
+            background-color: #f0f4f8;
             margin: 0;
-            padding: 20px;
+            padding: 20px 10px;
             display: flex;
             justify-content: center;
         }
         .container {
-            max-width: 480px;
+            max-width: 420px;
             width: 100%;
             background: #ffffff;
             padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #007791, #00a896);
+            color: white;
+            padding: 15px;
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
         }
         h2 {
-            font-size: 1.2rem;
-            color: #333;
+            font-size: 1.1rem;
+            color: #1a252f;
+            text-align: center;
             margin-bottom: 20px;
         }
         .step {
@@ -36,16 +50,18 @@
             font-weight: 600;
             margin-bottom: 15px;
             color: #2c3e50;
+            font-size: 1rem;
         }
         .options button {
             display: block;
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             margin-bottom: 10px;
             border: 1px solid #dcdfe6;
-            border-radius: 8px;
+            border-radius: 10px;
             background-color: #fff;
             font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -53,181 +69,164 @@
             background-color: #eef2f7;
             border-color: #b3c0d1;
         }
-        /* Cards de Recomendação */
-        .card {
-            border-radius: 8px;
+        
+        /* Estilos dos Cards de Recomendação (idênticos à imagem) */
+        .card-outer {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
             padding: 15px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-        .card-red {
-            border-left: 5px solid #d9534f;
-            background-color: #fdf2f2;
-            color: #a94442;
-        }
-        .card-green {
-            border-left: 5px solid #2e7d32;
-            background-color: #e8f5e9;
-            color: #1b5e20;
+            background-color: #fafbfc;
+            margin-top: 10px;
         }
         .card-title {
-            font-weight: bold;
             font-size: 1.05rem;
-            margin-bottom: 8px;
+            font-weight: 700;
+            color: #0d5c8a;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .btn-next {
-            background-color: #007bff;
+        .card-inner {
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .card-red {
+            border-left: 4px solid #d9534f;
+            background-color: #fdf2f2;
+            color: #922b21;
+        }
+        .card-green {
+            border-left: 4px solid #2e7d32;
+            background-color: #e8f5e9;
+            color: #1b5e20;
+        }
+        .btn-restart {
+            background-color: #007791;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             cursor: pointer;
             width: 100%;
             font-size: 1rem;
-            margin-top: 10px;
+            margin-top: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <div class="header">
+        Aconselhamento de Produtos de Saúde na Menopausa
+    </div>
+
     <h2>Recomendações Clínicas da Utente</h2>
 
-    <!-- PASSO 1: Sintomas Vasomotores & Fitoestrogénios -->
+    <!-- PERGUNTA 1 -->
     <div id="step-1" class="step active">
-        <div class="question">A utente apresenta sintomas vasomotores ligeiros a moderados?</div>
+        <div class="question">1. A utente apresenta contraindicação médica ou necessidade de encaminhamento imediato?</div>
         <div class="options">
-            <button onclick="responderSintomas(true)">Sim</button>
-            <button onclick="responderSintomas(false)">Não</button>
-        </div>
-
-        <!-- Recomendação 1 aparece IMEDIATAMENTE após responder a esta pergunta -->
-        <div id="rec-1" style="display: none;">
-            <div class="card card-red">
-                <div class="card-title">🔴 Encaminhamento / Recomendação Clínica #1</div>
-                <div>Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.</div>
-            </div>
-            <button class="btn-next" onclick="proximoPasso(2)">Continuar para a próxima pergunta</button>
+            <button onclick="avaliar(1, 'encaminhamento')">Sim (Encaminhamento Médico)</button>
+            <button onclick="proximoPasso(2)">Não (Continuar avaliação)</button>
         </div>
     </div>
 
-    <!-- PASSO 2: Tabagismo -->
+    <!-- PERGUNTA 2 -->
     <div id="step-2" class="step">
-        <div class="question">A utente é fumadora?</div>
+        <div class="question">2. A utente pretende fitoestrogénios sem avaliação médica prévia?</div>
         <div class="options">
-            <button onclick="responderFumadora(true)">Sim</button>
-            <button onclick="responderFumadora(false)">Não</button>
-        </div>
-
-        <!-- Recomendação 2 aparece logo após a pergunta do tabaco -->
-        <div id="rec-2" style="display: none;">
-            <div class="card card-green">
-                <div class="card-title">💊 Orientação / Aconselhamento Farmacêutico #2</div>
-                <div>Sintomas Vasomotores: Informar sobre o possível agravamento dos sintomas vasomotores e promover a cessação tabágica.</div>
-            </div>
-            <button class="btn-next" onclick="proximoPasso(3)">Continuar para Isoflavonas de Soja</button>
+            <button onclick="avaliar(2, 'fitoestrogenios')">Sim</button>
+            <button onclick="proximoPasso(3)">Não</button>
         </div>
     </div>
 
-    <!-- PASSO 3: Isoflavonas de Soja -->
+    <!-- PERGUNTA 3 -->
     <div id="step-3" class="step">
-        <div class="question">Considerar opção não hormonal (Isoflavonas de soja)?</div>
+        <div class="question">3. Qual a opção não hormonal adequada aos sintomas vasomotores?</div>
         <div class="options">
-            <button onclick="responderIsoflavonas(true)">Sim</button>
-            <button onclick="responderIsoflavonas(false)">Não</button>
-        </div>
-
-        <div id="rec-3" style="display: none;">
-            <div class="card card-green">
-                <div class="card-title">💊 Orientação / Aconselhamento Farmacêutico #3</div>
-                <div>Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia.</div>
-            </div>
-            <button class="btn-next" onclick="finalizar()">Ver Resumo Completo</button>
+            <button onclick="avaliar(3, 'polen_erva')">Extrato de Pólen / Erva-de-são-cristóvão</button>
+            <button onclick="avaliar(3, 'isoflavonas')">Isoflavonas de Soja</button>
+            <button onclick="avaliar(3, 'tabaco')">Apenas aconselhamento sobre tabagismo</button>
         </div>
     </div>
 
-    <!-- ECRÃ FINAL COM RESUMO COMPLETO -->
-    <div id="step-final" class="step">
-        <h3>Resumo das Recomendações</h3>
-        <div id="resumo-container"></div>
+    <!-- ECRÃ DE RESULTADO (MOSTRA APENAS 1 RECOMENDAÇÃO) -->
+    <div id="step-result" class="step">
+        <div id="recomendacao-unica"></div>
+        <button class="btn-restart" onclick="reiniciar()">Nova Avaliação</button>
     </div>
 </div>
 
 <script>
-    const estado = {
-        sintomas: false,
-        fumadora: false,
-        isoflavonas: false
-    };
-
-    function responderSintomas(val) {
-        estado.sintomas = val;
-        if (val) {
-            // Mostra a recomendação 1 logo de seguida
-            document.getElementById('rec-1').style.display = 'block';
-        } else {
-            proximoPasso(2);
-        }
-    }
-
-    function responderFumadora(val) {
-        estado.fumadora = val;
-        if (val) {
-            // Mostra a recomendação 2 logo de seguida
-            document.getElementById('rec-2').style.display = 'block';
-        } else {
-            proximoPasso(3);
-        }
-    }
-
-    function responderIsoflavonas(val) {
-        estado.isoflavonas = val;
-        if (val) {
-            document.getElementById('rec-3').style.display = 'block';
-        } else {
-            finalizar();
-        }
-    }
-
     function proximoPasso(passo) {
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         document.getElementById(`step-${passo}`).classList.add('active');
     }
 
-    function finalizar() {
-        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-        const finalStep = document.getElementById('step-final');
-        finalStep.classList.add('active');
+    // Esta função garante que APENAS 1 recomendação é gerada e apresentada
+    function avaliar(passo, decisao) {
+        let htmlRecomendacao = "";
 
-        const container = document.getElementById('resumo-container');
-        container.innerHTML = '';
-
-        if (estado.sintomas) {
-            container.innerHTML += `
-                <div class="card card-red">
+        // Regra de Prioridade: A primeira condição que bate certo define A ÚNICA recomendação
+        if (decisao === 'fitoestrogenios') {
+            htmlRecomendacao = `
+                <div class="card-outer">
                     <div class="card-title">🔴 Encaminhamento / Recomendação Clínica #1</div>
-                    <div>Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.</div>
+                    <div class="card-inner card-red">
+                        Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.
+                    </div>
+                </div>`;
+        } 
+        else if (decisao === 'polen_erva') {
+            htmlRecomendacao = `
+                <div class="card-outer">
+                    <div class="card-title">💊 Orientação / Aconselhamento Farmacêutico #1</div>
+                    <div class="card-inner card-green">
+                        Sintomas Vasomotores: Considerar Extrato de Pólen purificado OU erva-de-são-cristóvão (Cimicifuga racemosa).
+                    </div>
+                </div>`;
+        } 
+        else if (decisao === 'encaminhamento') {
+            htmlRecomendacao = `
+                <div class="card-outer">
+                    <div class="card-title">🔴 Encaminhamento / Recomendação Clínica #1</div>
+                    <div class="card-inner card-red">
+                        Encaminhamento médico.
+                    </div>
+                </div>`;
+        } 
+        else if (decisao === 'isoflavonas') {
+            htmlRecomendacao = `
+                <div class="card-outer">
+                    <div class="card-title">💊 Orientação / Aconselhamento Farmacêutico #1</div>
+                    <div class="card-inner card-green">
+                        Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia.
+                    </div>
+                </div>`;
+        } 
+        else if (decisao === 'tabaco') {
+            htmlRecomendacao = `
+                <div class="card-outer">
+                    <div class="card-title">💊 Orientação / Aconselhamento Farmacêutico #1</div>
+                    <div class="card-inner card-green">
+                        Sintomas Vasomotores: Informar sobre o possível agravamento dos sintomas vasomotores e promover a cessação tabágica.
+                    </div>
                 </div>`;
         }
 
-        if (estado.fumadora) {
-            container.innerHTML += `
-                <div class="card card-green">
-                    <div class="card-title">💊 Orientação / Aconselhamento Farmacêutico #2</div>
-                    <div>Sintomas Vasomotores: Informar sobre o possível agravamento dos sintomas vasomotores e promover a cessação tabágica.</div>
-                </div>`;
-        }
+        // Exibe apenas a recomendação gerada
+        document.getElementById('recomendacao-unica').innerHTML = htmlRecomendacao;
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step-result').classList.add('active');
+    }
 
-        if (estado.isoflavonas) {
-            container.innerHTML += `
-                <div class="card card-green">
-                    <div class="card-title">💊 Orientação / Aconselhamento Farmacêutico #3</div>
-                    <div>Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia.</div>
-                </div>`;
-        }
+    function reiniciar() {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step-1').classList.add('active');
     }
 </script>
 
