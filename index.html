@@ -313,12 +313,21 @@
                 ]
             },
 
+            /* REAVALIAÇÃO E SEGUIMENTO GERAL */
+            q_reavaliacao: {
+                tag: "Seguimento e Reavaliação",
+                title: "Ausência de melhoria, agravamento dos sintomas?",
+                binary: true,
+                yes: { result: "Encaminhamento médico.", urgent: true },
+                no: { result: "Manter medidas recomendadas e acompanhamento." }
+            },
+
             /* 1. SINTOMAS VASOMOTORES */
             vasomotores_1: {
                 tag: "Sintomas Vasomotores",
                 title: "Histórico de cancro hormonodependente?",
                 binary: true,
-                yes: { result: "Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.", urgent: true },
+                yes: { info: "Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.", urgent: true, next: "vasomotores_2" },
                 no: { next: "vasomotores_2" }
             },
             vasomotores_2: {
@@ -333,14 +342,14 @@
                 title: "Existe limitação à utilização de fitoestrogénios?",
                 binary: true,
                 yes: { next: "vasomotores_5" },
-                no: { result: "Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia." }
+                no: { info: "Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia.", next: "q_reavaliacao" }
             },
             vasomotores_5: {
                 tag: "Sintomas Vasomotores",
                 title: "Apresenta patologia hepática?",
                 binary: true,
-                yes: { result: "Sintomas Vasomotores: Evitar erva-de-são-cristóvão (Cimicifuga racemosa). Considerar Extrato de Pólen purificado (40 mg extrato citoplasmático + 120 mg extrato de pistilo/dia)." },
-                no: { result: "Sintomas Vasomotores: Considerar Extrato de Pólen purificado OU erva-de-são-cristóvão (Cimicifuga racemosa)." }
+                yes: { info: "Sintomas Vasomotores: Evitar erva-de-são-cristóvão (Cimicifuga racemosa). Considerar Extrato de Pólen purificado (40 mg extrato citoplasmático + 120 mg extrato de pistilo/dia).", next: "q_reavaliacao" },
+                no: { info: "Sintomas Vasomotores: Considerar Extrato de Pólen purificado OU erva-de-são-cristóvão (Cimicifuga racemosa).", next: "q_reavaliacao" }
             },
 
             /* 2. SINTOMAS GENITURINÁRIOS */
@@ -362,15 +371,15 @@
                 tag: "Sintomas Geniturinários",
                 title: "Aconselhar higiene íntima adequada e evitar produtos potencialmente irritantes.<br><br>Apresenta secura, ardor ou desconforto vaginal?",
                 binary: true,
-                yes: { result: "<b>Hidratantes Vaginais Não Hormonais:</b><br>• Compostos: Ácido Hialurónico, Pectina ou Ácido Policarbófilo.<br>• Modo de uso: Utilização regular 2 a 3 vezes por semana ou de acordo com a necessidade." },
+                yes: { info: "<b>Hidratantes Vaginais Não Hormonais:</b><br>• Compostos: Ácido Hialurónico, Pectina ou Ácido Policarbófilo.<br>• Modo de uso: Utilização regular 2 a 3 vezes por semana ou de acordo com a necessidade.", next: "genitu_dispareunia" },
                 no: { next: "genitu_dispareunia" }
             },
             genitu_dispareunia: {
                 tag: "Sintomas Geniturinários",
                 title: "Existe dor/desconforto apenas no coito (Dispareunia)?",
                 binary: true,
-                yes: { result: "<b>Lubrificantes Vaginais:</b><br>• Verificar compatibilidade com preservativos de látex.<br>• Utilizar durante a atividade sexual." },
-                no: { result: "Sintomas Geniturinários: Reavaliar sintomatologia." }
+                yes: { info: "<b>Lubrificantes Vaginais:</b><br>• Verificar compatibilidade com preservativos de látex.<br>• Utilizar durante a atividade sexual.", next: "q_reavaliacao" },
+                no: { info: "Sintomas Geniturinários: Reavaliar sintomatologia.", next: "q_reavaliacao" }
             },
 
             /* 3. SAÚDE ÓSSEA */
@@ -406,8 +415,8 @@
                 tag: "Saúde Óssea",
                 title: "Níveis de Vitamina D inferiores a 30 ng/mL?",
                 binary: true,
-                yes: { result: "Saúde Óssea: Considerar suplementar Vitamina D3 (800-2000 UI/dia)." },
-                no: { result: "Saúde Óssea: Manter aporte adequado de vitamina D." }
+                yes: { info: "Saúde Óssea: Considerar suplementar Vitamina D3 (800-2000 UI/dia).", next: "q_reavaliacao" },
+                no: { info: "Saúde Óssea: Manter aporte adequado de vitamina D.", next: "q_reavaliacao" }
             },
 
             /* 4. PERTURBAÇÕES DO SONO */
@@ -415,7 +424,7 @@
                 tag: "Perturbações do Sono",
                 title: "Está associada a afrontamentos e/ou suores noturnos?",
                 binary: true,
-                yes: { result: "Perturbações do Sono: Priorizar o alívio de sintomas vasomotores (consultar ramo de sintomas vasomotores)." },
+                yes: { info: "Perturbações do Sono: Priorizar o alívio de sintomas vasomotores (consultar ramo de sintomas vasomotores).", next: "q_reavaliacao" },
                 no: { next: "sono_2" }
             },
             sono_2: {
@@ -430,14 +439,14 @@
                 title: "Sintomas de ansiedade, stress ou alterações do humor?",
                 binary: true,
                 yes: { next: "sono_depressao" },
-                no: { result: "Perturbações do Sono: Considerar medidas de higiene do sono.<br>• Considerar Melatonina." }
+                no: { info: "Perturbações do Sono: Considerar medidas de higiene do sono.<br>• Considerar Melatonina.", next: "q_reavaliacao" }
             },
             sono_depressao: {
                 tag: "Perturbações do Sono",
                 title: "Alteração marcada ou persistente, depressão ou ideação suicida?",
                 binary: true,
                 yes: { result: "Perturbações do Sono: Encaminhamento médico.", urgent: true },
-                no: { result: "Perturbações do Sono: Medidas de higiene do sono e estratégias de gestão do stress.<br>• Considerar Valeriana officinalis + Melatonina." }
+                no: { info: "Perturbações do Sono: Medidas de higiene do sono e estratégias de gestão do stress.<br>• Considerar Valeriana officinalis + Melatonina.", next: "q_reavaliacao" }
             },
 
             /* 5. ALTERAÇÕES PSICOLÓGICAS */
@@ -460,14 +469,14 @@
                 title: "Suspeita de défice nutricional ou ingestão alimentar insuficiente de vitaminas do complexo B?",
                 binary: true,
                 yes: { next: "psico_4" },
-                no: { result: "Alterações Psicológicas: Manter medidas gerais de suporte: exercício físico, higiene do sono, gestão do stress e apoio psicológico." }
+                no: { info: "Alterações Psicológicas: Manter medidas gerais de suporte: exercício físico, higiene do sono, gestão do stress e apoio psicológico.", next: "q_reavaliacao" }
             },
             psico_4: {
                 tag: "Alterações Psicológicas",
                 title: "Necessidade de avaliação analítica. Encaminhamento médico, quando necessário.<br><br>Défice de Vit. B confirmado?",
                 binary: true,
-                yes: { result: "Alterações Psicológicas: Considerar vitaminas do complexo B." },
-                no: { result: "Alterações Psicológicas: Manter medidas gerais de suporte: exercício físico, higiene do sono, gestão do stress e apoio psicológico." }
+                yes: { info: "Alterações Psicológicas: Considerar vitaminas do complexo B.", next: "q_reavaliacao" },
+                no: { info: "Alterações Psicológicas: Manter medidas gerais de suporte: exercício físico, higiene do sono, gestão do stress e apoio psicológico.", next: "q_reavaliacao" }
             },
 
             /* 6. ALTERAÇÕES COGNITIVAS */
@@ -483,14 +492,14 @@
                 title: "Alterações cognitivas ligeiras ou queixas de memória?",
                 binary: true,
                 yes: { info: "Alterações Cognitivas: Reforçar medidas de higiene do sono e gestão do stress.", next: "cog_3" },
-                no: { result: "Alterações Cognitivas: Reavaliar sintomatologia." }
+                no: { info: "Alterações Cognitivas: Reavaliar sintomatologia.", next: "q_reavaliacao" }
             },
             cog_3: {
                 tag: "Alterações Cognitivas",
                 title: "Consume adequadamente peixe gordo? (2 a 3 vezes por semana)",
                 binary: true,
-                yes: { result: "Alterações Cognitivas: Manter aporte alimentar." },
-                no: { result: "Alterações Cognitivas: Considerar suplementação com Ómega 3 (DHA e EPA)." }
+                yes: { info: "Alterações Cognitivas: Manter aporte alimentar.", next: "q_reavaliacao" },
+                no: { info: "Alterações Cognitivas: Considerar suplementação com Ómega 3 (DHA e EPA).", next: "q_reavaliacao" }
             },
 
             /* 7. ALTERAÇÕES METABÓLICAS */
@@ -520,7 +529,7 @@
                 title: "Diabetes Mellitus 2?",
                 binary: true,
                 yes: { result: "Alterações Metabólicas: Encaminhar para consulta médica.", urgent: true },
-                no: { result: "Alterações Metabólicas: Manter medidas gerais de promoção da saúde metabólica." }
+                no: { info: "Alterações Metabólicas: Manter medidas gerais de promoção da saúde metabólica.", next: "q_reavaliacao" }
             },
 
             /* 8. ALTERAÇÕES CUTÂNEAS */
@@ -543,14 +552,14 @@
                 title: "Apresenta queda de cabelo ou perda de volume?",
                 binary: true,
                 yes: { next: "cut_4" },
-                no: { result: "Alterações Cutâneas: Dermocosméticos capilares específicos." }
+                no: { info: "Alterações Cutâneas: Dermocosméticos capilares específicos.", next: "q_reavaliacao" }
             },
             cut_4: {
                 tag: "Alterações Cutâneas",
                 title: "Queda de cabelo persistente ou com sinais de alarme?",
                 binary: true,
                 yes: { result: "Alterações Cutâneas: Encaminhamento médico/dermatológico.", urgent: true },
-                no: { result: "Alterações Cutâneas: Queda transitória ou sazonal - Considerar abordagem dermocosmética." }
+                no: { info: "Alterações Cutâneas: Queda transitória ou sazonal - Considerar abordagem dermocosmética.", next: "q_reavaliacao" }
             }
         };
 
@@ -737,11 +746,11 @@
             }
 
             if (target.info) {
-                sessionEvaluations.push({ text: target.info, isUrgent: false });
+                sessionEvaluations.push({ text: target.info, isUrgent: !!target.urgent });
             }
 
             if (target.result) {
-                sessionEvaluations.push({ text: target.result, isUrgent: target.urgent });
+                sessionEvaluations.push({ text: target.result, isUrgent: !!target.urgent });
             }
 
             if (target.next) {
