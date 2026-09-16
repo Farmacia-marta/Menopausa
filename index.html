@@ -13,7 +13,6 @@
             --bg-body: #f4f7f9;
             --card-bg: #ffffff;
             --text-main: #2c3e50;
-            --text-muted: #64748b;
             --border: #e2e8f0;
             --danger: #d9534f;
         }
@@ -35,50 +34,33 @@
             padding: 20px 15px;
         }
 
-        .top-bar {
-            width: 100%;
-            max-width: 500px;
-            background-color: var(--primary);
-            color: #ffffff;
-            padding: 12px 20px;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
         .container {
             background: var(--card-bg);
             width: 100%;
-            max-width: 500px;
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
+            max-width: 450px;
+            border-radius: 16px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             border: 1px solid var(--border);
-            border-top: none;
             overflow: hidden;
         }
 
         .header-hero {
             background: linear-gradient(135deg, #006699 0%, #00a88f 100%);
             color: white;
-            padding: 24px 20px;
+            padding: 20px;
             text-align: center;
         }
 
         .header-hero h1 {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            margin-bottom: 6px;
+            line-height: 1.3;
         }
 
         .header-hero p {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             opacity: 0.9;
+            margin-top: 4px;
         }
 
         .content {
@@ -87,7 +69,7 @@
 
         .step-tag {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: #006699;
             text-transform: uppercase;
@@ -96,17 +78,17 @@
         }
 
         .advice-text {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 700;
             color: #1e293b;
             line-height: 1.4;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .question-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #1e293b;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
             margin-bottom: 20px;
             line-height: 1.4;
         }
@@ -119,7 +101,7 @@
 
         .btn-option {
             background: #ffffff;
-            border: 2px solid var(--border);
+            border: 1.5px solid var(--border);
             padding: 14px 18px;
             border-radius: 10px;
             font-size: 0.95rem;
@@ -149,18 +131,26 @@
         .btn-binary {
             text-align: center;
             justify-content: center;
-            font-size: 1.05rem;
-            padding: 14px;
+            font-size: 1rem;
+            padding: 12px;
             border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-binary:hover {
+            border-color: var(--primary);
+            background-color: #f0f7fa;
         }
 
         .notice-card {
-            padding: 18px;
+            padding: 16px;
             border-radius: 10px;
             margin-bottom: 20px;
-            font-size: 1rem;
-            line-height: 1.5;
+            font-size: 0.95rem;
+            line-height: 1.4;
             font-weight: 600;
         }
 
@@ -180,54 +170,25 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 14px 20px;
-            border-radius: 10px;
+            padding: 12px 18px;
+            border-radius: 8px;
             width: 100%;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-bottom: 10px;
+            margin-top: 8px;
         }
 
-        .btn-action:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .menqol-tool-box {
-            background-color: #f0f7fa;
-            border: 1px solid #b3d7e8;
-            border-radius: 8px;
-            padding: 14px;
-            margin-bottom: 18px;
-            text-align: center;
-        }
-
-        .menqol-tool-box p {
-            font-size: 0.9rem;
-            color: var(--primary-dark);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .btn-menqol-link {
-            display: inline-block;
-            background-color: var(--secondary);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 6px;
+        .report-header {
+            font-size: 1.1rem;
             font-weight: 700;
-            text-decoration: none;
-            font-size: 0.85rem;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 16px;
         }
     </style>
 </head>
 <body>
-
-    <div class="top-bar">
-        <span>ALGORITMO DE DECISÃO CLÍNICA</span>
-        <span>SAÚDE NA MENOPAUSA</span>
-    </div>
 
     <div class="container">
         <div class="header-hero">
@@ -236,66 +197,42 @@
         </div>
 
         <div class="content" id="appContent">
-            <!-- Renderizado dinamicamente via JS -->
+            <!-- Conteúdo carregado via JS -->
         </div>
     </div>
 
     <script>
-        let initialAssessmentDone = false;
-
         const treeData = {
             start: {
                 tag: "Triagem Inicial",
                 title: "A utente apresenta sintomas associados à menopausa?",
                 binary: true,
                 yes: { next: "q_idade" },
-                no: { result: "Sem indicação para aplicação do protocolo de menopausa. Avaliar outras queixas da utente." }
+                no: { result: "Sem indicação para aplicação do protocolo de menopausa." }
             },
             q_idade: {
                 tag: "Avaliação de Idade",
                 title: "A utente tem idade inferior a 45 anos?",
                 binary: true,
-                yes: { result: "Encaminhamento médico para avaliação de menopausa precoce (<45 anos) ou insuficiência ovárica prematura (<40 anos).", urgent: true },
-                no: { next: "q_menqol" }
-            },
-            q_menqol: {
-                tag: "Avaliação de Impacto (MENQOL)",
-                title: "Os sintomas são graves, persistentes ou apresentam impacto significativo na qualidade de vida?",
-                showMenqolButton: true,
-                binary: true,
-                yes: { result: "Encaminhamento para consulta médica.", urgent: true },
+                yes: { result: "Encaminhamento médico para avaliação de menopausa precoce (<45 anos).", urgent: true },
                 no: { next: "q_predominante" }
             },
             q_predominante: {
                 tag: "Sintoma A Avaliar",
                 title: "Qual o sintoma predominante ou principal queixa da utente?",
                 options: [
-                    { text: "1. Sintomas Vasomotores (Afrontamentos / Suores noturnos)", next: "vasomotores_1" },
+                    { text: "1. Sintomas Vasomotores", next: "vasomotores_1" },
                     { text: "2. Sintomas Geniturinários", next: "genitu_1" },
-                    { text: "3. Saúde Óssea", next: "ossea_1" },
-                    { text: "4. Perturbações do Sono", next: "sono_1" },
-                    { text: "5. Alterações Psicológicas", next: "psico_1" },
-                    { text: "6. Alterações Cognitivas", next: "cog_1" },
-                    { text: "7. Alterações Metabólicas", next: "meta_1" },
-                    { text: "8. Alterações Cutâneas", next: "cut_1" }
+                    { text: "3. Saúde Óssea", next: "ossea_1" }
                 ]
             },
 
-            /* REAVALIAÇÃO E SEGUIMENTO GERAL */
-            q_reavaliacao: {
-                tag: "Seguimento e Reavaliação",
-                title: "Ausência de melhoria ou agravamento dos sintomas?",
-                binary: true,
-                yes: { result: "Encaminhamento médico.", urgent: true },
-                no: { result: "Manter medidas recomendadas e acompanhamento." }
-            },
-
-            /* 1. SINTOMAS VASOMOTORES */
+            /* VASOMOTORES */
             vasomotores_1: {
                 tag: "Vasomotores",
                 title: "Histórico de cancro hormonodependente?",
                 binary: true,
-                yes: { advice: "Não recomendar fitoestrogénios sem avaliação médica.", next: "vasomotores_2" },
+                yes: { result: "Não recomendar fitoestrogénios sem avaliação médica.", urgent: true },
                 no: { next: "vasomotores_2" }
             },
             vasomotores_2: {
@@ -311,226 +248,41 @@
                 title: "Existe limitação à utilização de fitoestrogénios?",
                 binary: true,
                 yes: { next: "vasomotores_5" },
-                no: { advice: "Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia.", next: "q_reavaliacao" }
+                no: { result: "Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia." }
             },
             vasomotores_5: {
                 tag: "Vasomotores",
                 title: "Apresenta patologia hepática?",
                 binary: true,
-                yes: { advice: "Evitar erva-de-são-cristóvão (Cimicifuga racemosa). Considerar Extrato de Pólen purificado (40 mg extrato citoplasmático + 120 mg extrato de pistilo/dia).", next: "q_reavaliacao" },
-                no: { advice: "Considerar Extrato de Pólen purificado OU erva-de-são-cristóvão (Cimicifuga racemosa).", next: "q_reavaliacao" }
+                yes: { result: "Evitar erva-de-são-cristóvão. Considerar Extrato de Pólen purificado." },
+                no: { result: "Considerar Extrato de Pólen purificado OU erva-de-são-cristóvão (Cimicifuga racemosa)." }
             },
 
-            /* 2. SINTOMAS GENITURINÁRIOS */
+            /* GENITURINÁRIO */
             genitu_1: {
-                tag: "Geniturinário",
-                title: "Apresenta hemorragia pós-menopausa?",
-                binary: true,
-                yes: { result: "Encaminhamento médico.", urgent: true },
-                no: { next: "genitu_2" }
-            },
-            genitu_2: {
-                tag: "Geniturinário",
-                title: "Apresenta sintomas sugestivos de infeção urinária ou recorrentes?",
-                binary: true,
-                yes: { result: "Encaminhamento médico.", urgent: true },
-                no: { next: "genitu_3" }
-            },
-            genitu_3: {
                 tag: "Geniturinário",
                 advice: "Aconselhar higiene íntima adequada e evitar produtos potencialmente irritantes.",
                 title: "Apresenta secura, ardor ou desconforto vaginal?",
                 binary: true,
-                yes: { advice: "Hidratantes Vaginais Não Hormonais (Ácido Hialurónico, Pectina ou Ácido Policarbófilo). Utilização regular 2 a 3 vezes por semana.", next: "genitu_dispareunia" },
-                no: { next: "genitu_dispareunia" }
-            },
-            genitu_dispareunia: {
-                tag: "Geniturinário",
-                title: "Existe dor/desconforto apenas no coito (Dispareunia)?",
-                binary: true,
-                yes: { advice: "Lubrificantes Vaginais: Verificar compatibilidade com preservativos de látex. Utilizar durante a atividade sexual.", next: "q_reavaliacao" },
-                no: { advice: "Reavaliar sintomatologia.", next: "q_reavaliacao" }
+                yes: { result: "Hidratantes Vaginais Não Hormonais (Ácido Hialurónico, Pectina ou Ácido Policarbófilo)." },
+                no: { result: "Manter higiene íntima adequada." }
             },
 
-            /* 3. SAÚDE ÓSSEA */
+            /* SAÚDE ÓSSEA */
             ossea_1: {
                 tag: "Saúde Óssea",
                 title: "Diagnóstico de osteoporose ou osteopenia?",
                 binary: true,
-                yes: { result: "Encaminhamento médico e reforço das medidas não farmacológicas de suporte à saúde óssea.", urgent: true },
+                yes: { result: "Encaminhamento médico e reforço das medidas não farmacológicas.", urgent: true },
                 no: { next: "ossea_2" }
             },
             ossea_2: {
                 tag: "Saúde Óssea",
-                title: "Apresenta perda de força muscular?",
-                binary: true,
-                yes: { advice: "Considerar treino de força e resistência. Considerar creatina monohidratada como complemento.", next: "ossea_3" },
-                no: { next: "ossea_3" }
-            },
-            ossea_3: {
-                tag: "Saúde Óssea",
-                title: "Apresenta dor articular?",
-                binary: true,
-                yes: { advice: "Avaliação da causa, intensidade, duração e impacto funcional.", next: "ossea_4" },
-                no: { next: "ossea_4" }
-            },
-            ossea_4: {
-                tag: "Saúde Óssea",
+                advice: "Considerar treino de força e resistência.",
                 title: "Ingestão dietética de Cálcio insuficiente (<1200 mg/dia)?",
                 binary: true,
-                yes: { advice: "Considerar suplementar cálcio para completar a ingestão diária.", next: "ossea_vit_d" },
-                no: { next: "ossea_vit_d" }
-            },
-            ossea_vit_d: {
-                tag: "Saúde Óssea",
-                title: "Níveis de Vitamina D inferiores a 30 ng/mL?",
-                binary: true,
-                yes: { advice: "Considerar suplementar Vitamina D3 (800-2000 UI/dia).", next: "q_reavaliacao" },
-                no: { advice: "Manter aporte adequado de vitamina D.", next: "q_reavaliacao" }
-            },
-
-            /* 4. PERTURBAÇÕES DO SONO */
-            sono_1: {
-                tag: "Perturbações do Sono",
-                title: "Está associada a afrontamentos e/ou suores noturnos?",
-                binary: true,
-                yes: { advice: "Priorizar o alívio de sintomas vasomotores.", next: "q_reavaliacao" },
-                no: { next: "sono_2" }
-            },
-            sono_2: {
-                tag: "Perturbações do Sono",
-                title: "Apresenta sinais/sintomas sugestivos de outra perturbação secundária?",
-                binary: true,
-                yes: { result: "Encaminhamento médico.", urgent: true },
-                no: { next: "sono_3" }
-            },
-            sono_3: {
-                tag: "Perturbações do Sono",
-                title: "Sintomas de ansiedade, stress ou alterações do humor?",
-                binary: true,
-                yes: { next: "sono_depressao" },
-                no: { advice: "Considerar medidas de higiene do sono e Melatonina.", next: "q_reavaliacao" }
-            },
-            sono_depressao: {
-                tag: "Perturbações do Sono",
-                title: "Alteração marcada ou persistente, depressão ou ideação suicida?",
-                binary: true,
-                yes: { result: "Encaminhamento médico.", urgent: true },
-                no: { advice: "Medidas de higiene do sono e gestão do stress. Considerar Valeriana + Melatonina.", next: "q_reavaliacao" }
-            },
-
-            /* 5. ALTERAÇÕES PSICOLÓGICAS */
-            psico_1: {
-                tag: "Alterações Psicológicas",
-                title: "Alteração marcada ou persistente, depressão ou ideação suicida?",
-                binary: true,
-                yes: { result: "Encaminhamento médico.", urgent: true },
-                no: { next: "psico_2" }
-            },
-            psico_2: {
-                tag: "Alterações Psicológicas",
-                title: "Apresenta irritabilidade ou alterações ligeiras do humor?",
-                binary: true,
-                yes: { advice: "Medidas gerais de suporte: exercício físico, higiene do sono, gestão do stress.", next: "psico_3" },
-                no: { advice: "Manter medidas gerais de suporte.", next: "psico_3" }
-            },
-            psico_3: {
-                tag: "Alterações Psicológicas",
-                title: "Suspeita de défice nutricional ou ingestão insuficiente de vitaminas B?",
-                binary: true,
-                yes: { next: "psico_4" },
-                no: { advice: "Manter medidas gerais de suporte.", next: "q_reavaliacao" }
-            },
-            psico_4: {
-                tag: "Alterações Psicológicas",
-                title: "Défice de Vit. B confirmado?",
-                binary: true,
-                yes: { advice: "Considerar vitaminas do complexo B.", next: "q_reavaliacao" },
-                no: { advice: "Manter medidas gerais de suporte.", next: "q_reavaliacao" }
-            },
-
-            /* 6. ALTERAÇÕES COGNITIVAS */
-            cog_1: {
-                tag: "Alterações Cognitivas",
-                title: "Sintomas graves e/ou incapacitantes?",
-                binary: true,
-                yes: { result: "Encaminhamento médico.", urgent: true },
-                no: { next: "cog_2" }
-            },
-            cog_2: {
-                tag: "Alterações Cognitivas",
-                title: "Alterações cognitivas ligeiras ou queixas de memória?",
-                binary: true,
-                yes: { advice: "Reforçar medidas de higiene do sono e gestão do stress.", next: "cog_3" },
-                no: { advice: "Reavaliar sintomatologia.", next: "q_reavaliacao" }
-            },
-
-            cog_3: {
-                tag: "Alterações Cognitivas",
-                title: "Consome adequadamente peixe gordo? (2 a 3 vezes por semana)",
-                binary: true,
-                yes: { advice: "Manter aporte alimentar.", next: "q_reavaliacao" },
-                no: { advice: "Considerar suplementação com Ómega 3 (DHA e EPA).", next: "q_reavaliacao" }
-            },
-
-            /* 7. ALTERAÇÕES METABÓLICAS */
-            meta_1: {
-                tag: "Alterações Metabólicas",
-                title: "Índice de Massa Corporal (IMC) > 27?",
-                binary: true,
-                yes: { advice: "Considerar perda de peso, exercício regular de força e consulta de nutrição.", next: "meta_2" },
-                no: { next: "meta_2" }
-            },
-            meta_2: {
-                tag: "Alterações Metabólicas",
-                title: "Triglicéridos Altos ou Risco Cardiovascular Elevado?",
-                binary: true,
-                yes: { advice: "Reforçar intervenção nutricional.", next: "meta_omega" },
-                no: { next: "meta_3" }
-            },
-            meta_omega: {
-                tag: "Alterações Metabólicas",
-                title: "Consumo adequado de peixe gordo?",
-                binary: true,
-                yes: { advice: "Manter aporte alimentar.", next: "meta_3" },
-                no: { advice: "Considerar suplementação com Ómega 3.", next: "meta_3" }
-            },
-            meta_3: {
-                tag: "Alterações Metabólicas",
-                title: "Diabetes Mellitus 2?",
-                binary: true,
-                yes: { result: "Encaminhar para consulta médica.", urgent: true },
-                no: { advice: "Manter medidas gerais de promoção da saúde metabólica.", next: "q_reavaliacao" }
-            },
-
-            /* 8. ALTERAÇÕES CUTÂNEAS */
-            cut_1: {
-                tag: "Alterações Cutâneas",
-                title: "Apresenta secura e/ou prurido?",
-                binary: true,
-                yes: { advice: "Considerar emolientes de baixo pH e Ácido Hialurónico tópico.", next: "cut_2" },
-                no: { next: "cut_2" }
-            },
-            cut_2: {
-                tag: "Alterações Cutâneas",
-                title: "Perda de elasticidade, rugas ou flacidez?",
-                binary: true,
-                yes: { advice: "Considerar dermocosméticos que estimulem a síntese de colagénio.", next: "cut_3" },
-                no: { next: "cut_3" }
-            },
-            cut_3: {
-                tag: "Alterações Cutâneas",
-                title: "Apresenta queda de cabelo ou perda de volume?",
-                binary: true,
-                yes: { next: "cut_4" },
-                no: { advice: "Dermocosméticos capilares específicos.", next: "q_reavaliacao" }
-            },
-            cut_4: {
-                tag: "Alterações Cutâneas",
-                title: "Queda de cabelo persistente ou com sinais de alarme?",
-                binary: true,
-                yes: { result: "Encaminhamento médico/dermatológico.", urgent: true },
-                no: { advice: "Queda transitória - Considerar abordagem dermocosmética.", next: "q_reavaliacao" }
+                yes: { result: "Considerar suplementar cálcio para completar a ingestão diária." },
+                no: { result: "Manter alimentação equilibrada rica em cálcio." }
             }
         };
 
@@ -540,24 +292,21 @@
 
             if (!node) return;
 
-            if (nodeKey === 'start' && initialAssessmentDone) {
-                renderNode('q_predominante');
-                return;
-            }
-
+            // Se for ecrã de Resultado Final
             if (node.result) {
                 const cardClass = node.urgent ? 'urgent' : 'success';
                 app.innerHTML = `
-                    <span class="step-tag">${node.tag || 'Resultado'}</span>
+                    <div class="report-header">Recomendações Clínicas da Utente</div>
                     <div class="notice-card ${cardClass}">
                         ${node.result}
                     </div>
                     <button class="btn-action" onclick="renderNode('q_predominante')">➕ Avaliar Outro Sintoma</button>
-                    <button class="btn-action" style="background-color: var(--text-muted);" onclick="resetSession()">🔄 Reiniciar Tudo</button>
+                    <button class="btn-action" style="background-color: #64748b;" onclick="renderNode('start')">🔄 Nova Utente</button>
                 `;
                 return;
             }
 
+            // Ecrã normal de pergunta
             let html = `<span class="step-tag">${node.tag}</span>`;
 
             if (node.advice) {
@@ -568,20 +317,11 @@
                 html += `<h2 class="question-title">${node.title}</h2>`;
             }
 
-            if (node.showMenqolButton) {
-                html += `
-                    <div class="menqol-tool-box">
-                        <p>Ainda não calculou o impacto dos sintomas com a utente?</p>
-                        <a href="#" class="btn-menqol-link" onclick="openMenqolForm(event)">📋 Abrir Questionário MENQOL</a>
-                    </div>
-                `;
-            }
-
             if (node.binary) {
                 html += `
                     <div class="binary-grid">
-                        <button class="btn-option btn-binary" onclick="handleSelect('${nodeKey}', 'yes')">Sim</button>
-                        <button class="btn-option btn-binary" onclick="handleSelect('${nodeKey}', 'no')">Não</button>
+                        <button class="btn-binary" onclick="handleSelect('${nodeKey}', 'yes')">Sim</button>
+                        <button class="btn-binary" onclick="handleSelect('${nodeKey}', 'no')">Não</button>
                     </div>
                 `;
             } else if (node.options) {
@@ -605,34 +345,20 @@
                 target = node.options[choice];
             }
 
-            if (nodeKey === 'q_menqol' && choice === 'no') {
-                initialAssessmentDone = true;
-            }
-
             if (target.next) {
                 renderNode(target.next);
             } else if (target.result) {
                 const app = document.getElementById('appContent');
                 const cardClass = target.urgent ? 'urgent' : 'success';
                 app.innerHTML = `
-                    <span class="step-tag">${node.tag || 'Resultado'}</span>
+                    <div class="report-header">Recomendações Clínicas da Utente</div>
                     <div class="notice-card ${cardClass}">
                         ${target.result}
                     </div>
                     <button class="btn-action" onclick="renderNode('q_predominante')">➕ Avaliar Outro Sintoma</button>
-                    <button class="btn-action" style="background-color: var(--text-muted);" onclick="resetSession()">🔄 Reiniciar Tudo</button>
+                    <button class="btn-action" style="background-color: #64748b;" onclick="renderNode('start')">🔄 Nova Utente</button>
                 `;
             }
-        }
-
-        function openMenqolForm(e) {
-            e.preventDefault();
-            window.open("about:blank", "_blank");
-        }
-
-        function resetSession() {
-            initialAssessmentDone = false;
-            renderNode('start');
         }
 
         renderNode('start');
