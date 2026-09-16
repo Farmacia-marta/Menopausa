@@ -319,7 +319,7 @@
                 title: "Histórico de cancro hormonodependente?",
                 binary: true,
                 yes: { 
-                    result: "Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.", 
+                    result: "Sintomas Vasomotores: Histórico de cancro hormonodependente - Não recomendar fitoestrogénios sem avaliação médica.", 
                     urgent: true,
                     next: "vasomotores_2"
                 },
@@ -348,10 +348,10 @@
             },
             vasomotores_5: {
                 tag: "Sintomas Vasomotores",
-                title: "Patologia hepática?",
+                title: "Apresenta patologia hepática?",
                 binary: true,
-                yes: { result: "Sintomas Vasomotores: Evitar erva-de-são-cristóvão (Cimicifuga racemosa). Considerar Extrato de Pólen purificado (ex: 40 mg extrato citoplasmático + 120 mg extrato de pistilo).", next_eval: "seguimento_1" },
-                no: { result: "Sintomas Vasomotores: Considerar Extrato de Pólen purificado ou erva-de-são-cristóvão (Cimicifuga racemosa).", next_eval: "seguimento_1" }
+                yes: { result: "Sintomas Vasomotores: Evitar erva-de-são-cristóvão (Cimicifuga racemosa). Considerar Extrato de Pólen purificado (40 mg extrato citoplasmático + 120 mg extrato de pistilo/dia).", next_eval: "seguimento_1" },
+                no: { result: "Sintomas Vasomotores: Considerar Extrato de Pólen purificado OU erva-de-são-cristóvão (Cimicifuga racemosa).", next_eval: "seguimento_1" }
             },
 
             /* 2. SINTOMAS GENITURINÁRIOS */
