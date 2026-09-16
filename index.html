@@ -1,4 +1,4 @@
-«<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
@@ -186,6 +186,12 @@
             color: #166534;
         }
 
+        .notice-card.info {
+            background-color: #f0f7fa;
+            border-left: 5px solid var(--primary);
+            color: var(--primary-dark);
+        }
+
         .btn-action {
             background-color: var(--primary);
             color: white;
@@ -318,26 +324,31 @@
                 tag: "Sintomas Vasomotores",
                 title: "Histórico de cancro hormonodependente?",
                 binary: true,
-                yes: { 
-                    result: "Sintomas Vasomotores: Histórico de cancro hormonodependente - Não recomendar fitoestrogénios sem avaliação médica.", 
-                    urgent: true,
-                    next: "vasomotores_2"
-                },
+                yes: { next: "vasomotores_alerta_cancro" },
                 no: { next: "vasomotores_2" }
+            },
+            vasomotores_alerta_cancro: {
+                tag: "Sintomas Vasomotores",
+                title: "Recomendação Clínica:",
+                infoText: "Não recomendar fitoestrogénios sem avaliação médica.",
+                resultText: "Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.",
+                isUrgent: true,
+                next: "vasomotores_2"
             },
             vasomotores_2: {
                 tag: "Sintomas Vasomotores",
                 title: "A utente é fumadora?",
                 binary: true,
-                yes: { next: "vasomotores_3" },
+                yes: { next: "vasomotores_alerta_tabaco" },
                 no: { next: "vasomotores_4" }
             },
-            vasomotores_3: {
+            vasomotores_alerta_tabaco: {
                 tag: "Sintomas Vasomotores",
-                title: "Informar sobre o possível agravamento dos sintomas vasomotores e promover a cessação tabágica.<br><br>Existe limitação à utilização de fitoestrogénios?",
-                binary: true,
-                yes: { next: "vasomotores_5" },
-                no: { result: "Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia.", next_eval: "seguimento_1" }
+                title: "Recomendação Clínica:",
+                infoText: "Informar sobre o possível agravamento dos sintomas vasomotores e promover a cessação tabágica.",
+                resultText: "Sintomas Vasomotores: Informar sobre o possível agravamento dos sintomas vasomotores e promover a cessação tabágica.",
+                isUrgent: false,
+                next: "vasomotores_4"
             },
             vasomotores_4: {
                 tag: "Sintomas Vasomotores",
@@ -373,24 +384,31 @@
                 tag: "Sintomas Geniturinários",
                 title: "Aconselhar higiene íntima adequada e evitar produtos potencialmente irritantes.<br><br>Apresenta secura, ardor ou desconforto vaginal?",
                 binary: true,
-                yes: { 
-                    result: "Sintomas Geniturinários: Hidratantes Vaginais Não Hormonais (com ácido hialurónico, ácido lático/biotina, pectina). Utilização regular 2 a 3 vezes por semana ou de acordo com a necessidade.", 
-                    next_eval: "seguimento_1" 
-                },
+                yes: { next: "genitu_rec_hidratantes" },
                 no: { next: "genitu_4" }
+            },
+            genitu_rec_hidratantes: {
+                tag: "Sintomas Geniturinários",
+                title: "Recomendação - Secura/Desconforto Vaginal:",
+                infoText: "<b>Hidratantes Vaginais Não Hormonais:</b><br>• Compostos: Ácido Hialurónico, Ácido Lático / Biotina, Pectina.<br>• Modo de uso: Utilização regular 2 a 3 vezes por semana ou de acordo com a necessidade.",
+                resultText: "Sintomas Geniturinários: Hidratantes Vaginais Não Hormonais (com ácido hialurónico, ácido lático/biotina, pectina). Utilização regular 2 a 3 vezes por semana.",
+                isUrgent: false,
+                next_eval: "seguimento_1"
             },
             genitu_4: {
                 tag: "Sintomas Geniturinários",
                 title: "Existe dor/desconforto apenas no coito (Dispareunia)?",
                 binary: true,
-                yes: { 
-                    result: "Sintomas Geniturinários: Lubrificantes vaginais (Verificar compatibilidade com preservativos de látex). Utilizar durante a atividade sexual.", 
-                    next_eval: "seguimento_1" 
-                },
-                no: { 
-                    result: "Sintomas Geniturinários: Reavaliar sintomatologia.", 
-                    next_eval: "seguimento_1" 
-                }
+                yes: { next: "genitu_rec_lubrificantes" },
+                no: { result: "Sintomas Geniturinários: Reavaliar sintomatologia.", next_eval: "seguimento_1" }
+            },
+            genitu_rec_lubrificantes: {
+                tag: "Sintomas Geniturinários",
+                title: "Recomendação - Dispareunia:",
+                infoText: "<b>Lubrificantes Vaginais:</b><br>• Utilizar durante a atividade sexual.<br>• Verificar compatibilidade com preservativos de látex.",
+                resultText: "Sintomas Geniturinários: Lubrificantes vaginais (Verificar compatibilidade com preservativos de látex). Utilizar durante a atividade sexual.",
+                isUrgent: false,
+                next_eval: "seguimento_1"
             },
 
             /* 3. SAÚDE ÓSSEA */
@@ -633,6 +651,18 @@
             let html = `<span class="step-tag">${node.tag}</span>`;
             html += `<h2 class="question-title">${node.title}</h2>`;
 
+            if (node.infoText) {
+                const cardClass = node.isUrgent ? 'urgent' : 'info';
+                html += `
+                    <div class="notice-card ${cardClass}" style="margin-bottom: 20px;">
+                        ${node.infoText}
+                    </div>
+                    <button class="btn-action" onclick="advanceFromInfo('${nodeKey}')">Continuar a Avaliação ➔</button>
+                `;
+                app.innerHTML = html;
+                return;
+            }
+
             if (node.showMenqolButton) {
                 html += `
                     <div class="menqol-tool-box">
@@ -658,6 +688,20 @@
             }
 
             app.innerHTML = html;
+        }
+
+        function advanceFromInfo(nodeKey) {
+            const node = treeData[nodeKey];
+            if (node.resultText) {
+                sessionEvaluations.push({ text: node.resultText, isUrgent: node.isUrgent });
+            }
+            if (node.next) {
+                renderNode(node.next);
+            } else if (node.next_eval) {
+                renderNode(node.next_eval);
+            } else {
+                showResult();
+            }
         }
 
         function openMenqolForm(e) {
