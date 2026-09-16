@@ -263,7 +263,7 @@
 
     <div class="container">
         <div class="header-hero">
-            <h1>Aconselhamento de Produtos de Saúde na Menopausa</h1>
+            <h1>Algoritmo de Apoio à Decisão para Aconselhamento de Produtos de Saúde na Menopausa</h1>
         </div>
 
         <div class="content" id="appContent">
@@ -279,16 +279,15 @@
             start: {
                 tag: "Triagem Inicial",
                 title: "A utente apresenta sintomas associados à menopausa?",
-                options: [
-                    { text: "Sim", next: "q_idade" },
-                    { text: "Não", result: "Sem indicação para aplicação do protocolo de menopausa. Avaliar outras queixas da utente." }
-                ]
+                binary: true,
+                yes: { next: "q_idade" },
+                no: { result: "Sem indicação para aplicação do protocolo de menopausa. Avaliar outras queixas da utente." }
             },
             q_idade: {
                 tag: "Avaliação de Idade",
                 title: "A utente tem idade inferior a 45 anos?",
                 binary: true,
-                yes: { result: "Encaminhamento médico para avaliação de menopausa precoce (<45 anos) ou Insuficiência ovárica prematura (<40 anos).", urgent: true },
+                yes: { result: "Encaminhamento médico para avaliação de menopausa precoce (<45 anos) ou insuficiência ovárica prematura (<40 anos).", urgent: true },
                 no: { next: "q_menqol" }
             },
             q_menqol: {
@@ -301,12 +300,12 @@
             },
             q_predominante: {
                 tag: "Sintoma A Avaliar",
-                title: "Selecione o sintoma que pretende avaliar para a utente:",
+                title: "Qual o sintoma predominante ou principal queixa da utente?",
                 options: [
                     { text: "1. Sintomas Vasomotores (Afrontamentos / Suores noturnos)", next: "vasomotores_1" },
                     { text: "2. Sintomas Geniturinários", next: "genitu_1" },
                     { text: "3. Saúde Óssea", next: "ossea_1" },
-                    { text: "4. Perturbações do Sono", next: "sono_1" },
+                    { text: "4. Perturbações do Sono (Insónia inicial, despertares noturnos ou sono não reparador)", next: "sono_1" },
                     { text: "5. Alterações Psicológicas", next: "psico_1" },
                     { text: "6. Alterações Cognitivas", next: "cog_1" },
                     { text: "7. Alterações Metabólicas", next: "meta_1" },
@@ -314,121 +313,142 @@
                 ]
             },
 
-            /* 1. VASOMOTORES */
+            /* 1. SINTOMAS VASOMOTORES */
             vasomotores_1: {
-                tag: "Vasomotores",
+                tag: "Sintomas Vasomotores",
                 title: "Histórico de cancro hormonodependente?",
                 binary: true,
                 yes: { result: "Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.", urgent: true },
                 no: { next: "vasomotores_2" }
             },
             vasomotores_2: {
-                tag: "Vasomotores",
+                tag: "Sintomas Vasomotores",
                 title: "A utente é fumadora?",
                 binary: true,
                 yes: { next: "vasomotores_3" },
                 no: { next: "vasomotores_4" }
             },
             vasomotores_3: {
-                tag: "Vasomotores",
+                tag: "Sintomas Vasomotores",
                 title: "Informar sobre o possível agravamento dos sintomas vasomotores e promover a cessação tabágica.<br><br>Existe limitação à utilização de fitoestrogénios?",
                 binary: true,
                 yes: { next: "vasomotores_5" },
-                no: { result: "Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia." }
+                no: { result: "Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia.", next_eval: "seguimento_1" }
             },
             vasomotores_4: {
-                tag: "Vasomotores",
+                tag: "Sintomas Vasomotores",
                 title: "Existe limitação à utilização de fitoestrogénios?",
                 binary: true,
                 yes: { next: "vasomotores_5" },
-                no: { result: "Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia." }
+                no: { result: "Sintomas Vasomotores: Considerar Isoflavonas de soja (Glycine max) 40–72 mg/dia.", next_eval: "seguimento_1" }
             },
             vasomotores_5: {
-                tag: "Vasomotores",
+                tag: "Sintomas Vasomotores",
                 title: "Patologia hepática?",
                 binary: true,
-                yes: { result: "Sintomas Vasomotores: Evitar erva-de-são-cristóvão (Cimicifuga racemosa). Considerar Extrato de Pólen purificado (ex: 40 mg extrato citoplasmático + 120 mg extrato de pistilo/dia).", urgent: true },
-                no: { result: "Sintomas Vasomotores: Considerar Extrato de Pólen purificado ou erva-de-são-cristóvão (Cimicifuga racemosa)." }
+                yes: { result: "Sintomas Vasomotores: Evitar erva-de-são-cristóvão (Cimicifuga racemosa). Considerar Extrato de Pólen purificado (ex: 40 mg extrato citoplasmático + 120 mg extrato de pistilo).", next_eval: "seguimento_1" },
+                no: { result: "Sintomas Vasomotores: Considerar Extrato de Pólen purificado ou erva-de-são-cristóvão (Cimicifuga racemosa).", next_eval: "seguimento_1" }
             },
 
-            /* 2. GENITURINÁRIOS */
+            /* 2. SINTOMAS GENITURINÁRIOS */
             genitu_1: {
-                tag: "Geniturinários",
+                tag: "Sintomas Geniturinários",
                 title: "Apresenta hemorragia pós-menopausa?",
                 binary: true,
-                yes: { result: "Sintomas Geniturinários: Encaminhamento médico imediato por hemorragia pós-menopausa.", urgent: true },
+                yes: { result: "Sintomas Geniturinários: Encaminhamento médico.", urgent: true },
                 no: { next: "genitu_2" }
             },
             genitu_2: {
-                tag: "Geniturinários",
+                tag: "Sintomas Geniturinários",
                 title: "Apresenta sintomas sugestivos de infeção urinária ou candidíase?",
                 binary: true,
-                yes: { result: "Sintomas Geniturinários: Encaminhamento médico por suspeita de infeção.", urgent: true },
+                yes: { result: "Sintomas Geniturinários: Encaminhamento médico.", urgent: true },
                 no: { next: "genitu_3" }
             },
             genitu_3: {
-                tag: "Geniturinários",
+                tag: "Sintomas Geniturinários",
                 title: "Aconselhar higiene íntima adequada e evitar produtos potencialmente irritantes.<br><br>Apresenta secura, ardor ou desconforto vaginal?",
                 binary: true,
-                yes: { result: "Sintomas Geniturinários: Hidratantes Vaginais Não Hormonais (com ácido hialurónico, fitoestrogénios, pectina). Utilização regular 2 a 3 vezes/semana." },
+                yes: { result: "Sintomas Geniturinários: Hidratantes Vaginais Não Hormonais (com ácido hialurónico, ácido lático/biotina, pectina). Utilização regular 2 a 3 vezes por semana ou de acordo com a necessidade.", next_eval: "seguimento_1" },
                 no: { next: "genitu_4" }
             },
             genitu_4: {
-                tag: "Geniturinários",
-                title: "Existe dor/desconforto apenas no coito (Dispareunia)?",
+                tag: "Sintomas Geniturinários",
+                title: "Existe dor/desconforto apenas na coito (Dispareunia)?",
                 binary: true,
-                yes: { result: "Sintomas Geniturinários: Lubrificantes vaginais durante a atividade sexual (Verificar compatibilidade com preservativos de látex)." },
-                no: { result: "Sintomas Geniturinários: Reavaliar sintomatologia local." }
+                yes: { result: "Sintomas Geniturinários: Lubrificantes vaginais (Verificar compatibilidade com preservativos de látex). Utilizar durante a atividade sexual.", next_eval: "seguimento_1" },
+                no: { result: "Sintomas Geniturinários: Reavaliar sintomatologia.", next_eval: "seguimento_1" }
             },
 
             /* 3. SAÚDE ÓSSEA */
             ossea_1: {
                 tag: "Saúde Óssea",
-                title: "Diagnóstico de Osteoporose ou Osteopenia?",
+                title: "Diagnóstico de osteoporose ou osteopenia?",
                 binary: true,
                 yes: { result: "Saúde Óssea: Encaminhamento médico e reforço das medidas não farmacológicas de suporte à saúde óssea.", urgent: true },
                 no: { next: "ossea_2" }
             },
             ossea_2: {
                 tag: "Saúde Óssea",
-                title: "Apresenta fratura por fragilidade?",
+                title: "Apresenta perda de força muscular?",
                 binary: true,
-                yes: { result: "Saúde Óssea: Considerar Risco de Queda e fraturas e encaminhamento médico.", urgent: true },
+                yes: { next: "ossea_2_sub" },
                 no: { next: "ossea_3" }
+            },
+            ossea_2_sub: {
+                tag: "Saúde Óssea",
+                title: "Recomendações para Perda de Força Muscular:<br>• Considerar treino de força e resistência.<br>• Considerar creatina monohidratada como complemento, na ausência de contraindicações.<br><br>A utente apresenta também dor articular?",
+                binary: true,
+                yes: { next: "ossea_3_eval" },
+                no: { next: "ossea_4" }
             },
             ossea_3: {
                 tag: "Saúde Óssea",
                 title: "Apresenta dor articular?",
                 binary: true,
-                yes: { result: "Saúde Óssea: Avaliação da causa, intensidade, duração e impacto funcional. Encaminhamento médico se necessário." },
+                yes: { next: "ossea_3_eval" },
+                no: { next: "ossea_4" }
+            },
+            ossea_3_eval: {
+                tag: "Saúde Óssea",
+                title: "Avaliação da causa, intensidade, duração e impacto funcional.<br><br>Necessita de encaminhamento médico?",
+                binary: true,
+                yes: { result: "Saúde Óssea: Encaminhamento médico, se necessário.", urgent: true },
                 no: { next: "ossea_4" }
             },
             ossea_4: {
                 tag: "Saúde Óssea",
-                title: "Ingestão diária de Cálcio insuficiente (< 1000 mg/dia)?",
+                title: "Ingestão diária de Cálcio insuficiente (<1200 mg/dia)?",
                 binary: true,
-                yes: { result: "Saúde Óssea: Aconselhar suplemento de Cálcio para complementar a ingestão diária." },
-                no: { next: "ossea_5" }
+                yes: { next: "ossea_5" },
+                no: { next: "ossea_6" }
             },
             ossea_5: {
                 tag: "Saúde Óssea",
-                title: "Níveis de Vitamina D3 inadequados (< 20 ng/mL)?",
+                title: "Níveis de Vitamina D inferiores a 30 ng/mL?",
                 binary: true,
-                yes: { result: "Saúde Óssea: Aconselhar suplementação com Vitamina D3 (800-1000 UI/dia)." },
-                no: { result: "Saúde Óssea: Manter aporte adequado de cálcio e Vitamina D3." }
+                yes: { result: "Saúde Óssea: Considerar suplementar cálcio para complementar a ingestão diária + Considerar suplementar Vitamina D3 (800-2000 Unidades).", next_eval: "seguimento_1" },
+                no: { result: "Saúde Óssea: Considerar suplementar cálcio para complementar a ingestão diária + Manter aporte adequado de vitamina D.", next_eval: "seguimento_1" }
+            },
+            ossea_6: {
+                tag: "Saúde Óssea",
+                title: "Níveis de Vitamina D inferiores a 30 ng/mL?",
+                binary: true,
+                yes: { result: "Saúde Óssea: Considerar suplementar Vitamina D3 (800-2000 Unidades).", next_eval: "seguimento_1" },
+                no: { result: "Saúde Óssea: Manter aporte adequado de vitamina D.", next_eval: "seguimento_1" }
             },
 
-            /* 4. SONO */
+            /* 4. PERTURBAÇÕES DO SONO */
             sono_1: {
                 tag: "Perturbações do Sono",
                 title: "Está associada a afrontamentos e/ou suores noturnos?",
                 binary: true,
-                yes: { result: "Perturbações do Sono: Priorizar o alívio dos sintomas vasomotores (avaliar queixas vasomotores)." },
+                yes: { result: "Perturbações do Sono: Priorizar o alívio de sintomas vasomotores.", next_eval: "seguimento_1" },
                 no: { next: "sono_2" }
             },
             sono_2: {
                 tag: "Perturbações do Sono",
-                title: "Apresenta características sugestivas de insónia inicial ou secundária? (p.ex., tonturas, palpitações, ansiedade)",
+                title: "Apresenta características sugestivas de outra perturbação do sono secundária? (apneia, nictúria, pernas inquietas)",
                 binary: true,
                 yes: { result: "Perturbações do Sono: Encaminhamento médico.", urgent: true },
                 no: { next: "sono_3" }
@@ -437,41 +457,48 @@
                 tag: "Perturbações do Sono",
                 title: "Sintomas de ansiedade, stress ou alterações do humor?",
                 binary: true,
-                yes: { result: "Perturbações do Sono: Medidas de higiene do sono e suplementar Melatonina ou Valeriana/Passiflora." },
-                no: { result: "Perturbações do Sono: Medidas de higiene do sono e suplementar Melatonina." }
+                yes: { next: "sono_4" },
+                no: { result: "Perturbações do Sono: Considerar medidas de higiene do sono + Considerar melatonina.", next_eval: "seguimento_1" }
+            },
+            sono_4: {
+                tag: "Perturbações do Sono",
+                title: "Apresenta alteração marcada ou persistente, depressão ou ideação suicida?",
+                binary: true,
+                yes: { result: "Perturbações do Sono: Encaminhamento médico.", urgent: true },
+                no: { result: "Perturbações do Sono: Medidas de higiene do sono e estratégias de gestão do stress + Considerar Passiflora + Valeriana e Melatonina.", next_eval: "seguimento_1" }
             },
 
-            /* 5. PSICOLÓGICAS */
+            /* 5. ALTERAÇÕES PSICOLÓGICAS */
             psico_1: {
                 tag: "Alterações Psicológicas",
-                title: "Alteração marcada da personalidade, depressão ou ideação suicida?",
+                title: "Alteração marcada ou persistente, depressão ou ideação suicida?",
                 binary: true,
-                yes: { result: "Alterações Psicológicas: Encaminhamento médico urgente.", urgent: true },
+                yes: { result: "Alterações Psicológicas: Encaminhamento médico.", urgent: true },
                 no: { next: "psico_2" }
             },
             psico_2: {
                 tag: "Alterações Psicológicas",
-                title: "Apresenta instabilidade de humor?",
+                title: "Apresenta irritabilidade ou alterações ligeiras do humor?<br>(Aplicação de medidas gerais de suporte: exercício físico, sono, gestão do stress e apoio psicológico)",
                 binary: true,
-                yes: { result: "Alterações Psicológicas: Medidas gerais de suporte: exercício físico, sono, gestão do stress e apoio psicológico." },
+                yes: { next: "psico_3" },
                 no: { next: "psico_3" }
             },
             psico_3: {
                 tag: "Alterações Psicológicas",
-                title: "Suspeita de défice funcional ou ingestão alimentar insuficiente da vitamina B12?",
+                title: "Suspeita de défice nutricional ou ingestão alimentar insuficiente de vitaminas do complexo B?",
                 binary: true,
                 yes: { next: "psico_4" },
-                no: { result: "Alterações Psicológicas: Manter medidas gerais de suporte." }
+                no: { result: "Alterações Psicológicas: Manter medidas gerais de suporte: exercício físico, higiene do sono, gestão do stress e apoio psicológico.", next_eval: "seguimento_1" }
             },
             psico_4: {
                 tag: "Alterações Psicológicas",
-                title: "Défice confirmado?",
+                title: "Necessidade de avaliação analítica. Encaminhamento médico quando necessário.<br><br>Défice de Vit. B confirmado?",
                 binary: true,
-                yes: { result: "Alterações Psicológicas: Considerar vitaminas do complexo B." },
-                no: { result: "Alterações Psicológicas: Manter medidas gerais de suporte." }
+                yes: { result: "Alterações Psicológicas: Considerar vitaminas do complexo B.", next_eval: "seguimento_1" },
+                no: { result: "Alterações Psicológicas: Manter medidas gerais de suporte: exercício físico, higiene do sono, gestão do stress e apoio psicológico.", next_eval: "seguimento_1" }
             },
 
-            /* 6. COGNITIVAS */
+            /* 6. ALTERAÇÕES COGNITIVAS */
             cog_1: {
                 tag: "Alterações Cognitivas",
                 title: "Sintomas graves e/ou incapacitantes?",
@@ -484,67 +511,90 @@
                 title: "Alterações cognitivas ligeiras ou queixas de memória?",
                 binary: true,
                 yes: { next: "cog_3" },
-                no: { result: "Alterações Cognitivas: Reforçar medidas de higiene do sono e gestão do stress." }
+                no: { result: "Alterações Cognitivas: Reavaliar sintomatologia.", next_eval: "seguimento_1" }
             },
             cog_3: {
                 tag: "Alterações Cognitivas",
-                title: "Consumo adequado de peixe gordo? (1 a 2 vezes por semana)",
+                title: "Reforçar medidas de higiene do sono e gestão do stress.<br><br>Consumo adequado de peixe gordo? (2 a 3 vezes por semana)",
                 binary: true,
-                yes: { result: "Alterações Cognitivas: Manter aporte alimentar." },
-                no: { result: "Alterações Cognitivas: Considerar suplementação com Omega 3 (DHA e EPA)." }
+                yes: { result: "Alterações Cognitivas: Manter aporte alimentar.", next_eval: "seguimento_1" },
+                no: { result: "Alterações Cognitivas: Considerar suplementação com Ómega 3 (DHA e EPA).", next_eval: "seguimento_1" }
             },
 
-            /* 7. METABÓLICAS */
+            /* 7. ALTERAÇÕES METABÓLICAS */
             meta_1: {
                 tag: "Alterações Metabólicas",
-                title: "Índice de Massa Corporal (IMC) >= 27?",
+                title: "Índice de Massa Corporal (IMC) > 27?",
                 binary: true,
-                yes: { result: "Alterações Metabólicas: Considerar perda de peso, sugerir consulta de nutrição, exercício regular de força e aeróbico." },
+                yes: { next: "meta_bmi_high" },
                 no: { next: "meta_2" }
+            },
+            meta_bmi_high: {
+                tag: "Alterações Metabólicas",
+                title: "Recomendações: Considerar perda de peso, Exercício regular de força e resistência, Sugerir consulta de nutrição.<br><br>Apresenta Triglicéridos Altos ou Risco Cardiovascular Elevado?",
+                binary: true,
+                yes: { next: "meta_cv_high" },
+                no: { next: "meta_3" }
             },
             meta_2: {
                 tag: "Alterações Metabólicas",
-                title: "Triglicéridos altos ou Risco Cardiovascular Elevado?",
+                title: "Triglicéridos Altos ou Risco Cardiovascular Elevado?",
                 binary: true,
-                yes: { result: "Alterações Metabólicas: Omega 3 para reduzir a gordura visceral e proteger o coração." },
+                yes: { next: "meta_cv_high" },
                 no: { next: "meta_3" }
+            },
+            meta_cv_high: {
+                tag: "Alterações Metabólicas",
+                title: "Reforçar intervenção nutricional.<br><br>Consumo adequado de peixe gordo? (2 a 3 vezes por semana)",
+                binary: true,
+                yes: { result: "Alterações Metabólicas: Manter aporte alimentar.", next_eval: "seguimento_1" },
+                no: { result: "Alterações Metabólicas: Considerar suplementação com Ómega 3 (DHA e EPA).", next_eval: "seguimento_1" }
             },
             meta_3: {
                 tag: "Alterações Metabólicas",
                 title: "Diabetes Mellitus 2?",
                 binary: true,
                 yes: { result: "Alterações Metabólicas: Encaminhar para consulta médica.", urgent: true },
-                no: { result: "Alterações Metabólicas: Manter estilo de vida saudável e monitorização regular." }
+                no: { result: "Alterações Metabólicas: Manter medidas gerais de promoção da saúde metabólica.", next_eval: "seguimento_1" }
             },
 
-            /* 8. CUTÂNEAS */
+            /* 8. ALTERAÇÕES CUTÂNEAS */
             cut_1: {
                 tag: "Alterações Cutâneas",
-                title: "Uso de Proteção Solar Diária (Prevenção de Fotoenvelhecimento)?",
+                title: "Proteção Solar Diária (Prevenção do Fotoenvelhecimento).<br><br>Apresenta secura e/ou prurido?",
                 binary: true,
-                yes: { next: "cut_2" },
-                no: { result: "Alterações Cutâneas: Aconselhar uso diário de fotoprotetor de amplo espectro (FPS 30-50+)." }
+                yes: { result: "Alterações Cutâneas: Considerar emolientes de base pH e Ácido Hialurónico tópico (para reter humidade).", next_eval: "cut_2" },
+                no: { next: "cut_2" }
             },
             cut_2: {
                 tag: "Alterações Cutâneas",
-                title: "Apresenta rugas finas ou flacidez?",
+                title: "Perda de elasticidade, rugas ou flacidez?",
                 binary: true,
-                yes: { result: "Alterações Cutâneas: Aconselhar cosmética de estimulação lipídica/colagénio, emoliantes de base pH e Ácido Hialurónico tópico." },
+                yes: { result: "Alterações Cutâneas: Considerar dermocosméticos que estimulem a síntese de colagénio.", next_eval: "cut_3" },
                 no: { next: "cut_3" }
             },
             cut_3: {
                 tag: "Alterações Cutâneas",
-                title: "Perda de densidade/firmeza na pele?",
+                title: "Apresenta queda de cabelo ou perda de volume?",
                 binary: true,
-                yes: { result: "Alterações Cutâneas: Dermocosméticos que estimulem a síntese de colagénio e inibidores de impacto negativo da menopausa cutânea." },
-                no: { next: "cut_4" }
+                yes: { next: "cut_4" },
+                no: { result: "Alterações Cutâneas: Dermocosméticos capilares específicos.", next_eval: "seguimento_1" }
             },
             cut_4: {
                 tag: "Alterações Cutâneas",
-                title: "Apresenta queda de cabelo ou perda de volume capilar?",
+                title: "Queda de cabelo persistente ou com sinais de alarme?",
                 binary: true,
-                yes: { result: "Alterações Cutâneas: Dermocosméticos capilares e suplementar vitaminas do complexo B, zinco e aminoácidos." },
-                no: { result: "Alterações Cutâneas: Manter rotina dermocosmética habitual." }
+                yes: { result: "Alterações Cutâneas: Encaminhamento médico/dermatológico.", urgent: true },
+                no: { result: "Alterações Cutâneas: Queda transitória ou sazonal - Considerar abordagem dermocosmética.", next_eval: "seguimento_1" }
+            },
+
+            /* SEGUIMENTO E REAVALIAÇÃO */
+            seguimento_1: {
+                tag: "Seguimento e Reavaliação",
+                title: "Após o período de acompanhamento: Verifica-se ausência de melhoria ou agravamento dos sintomas?",
+                binary: true,
+                yes: { result: "Seguimento e Reavaliação: Encaminhamento médico.", urgent: true },
+                no: { result: "Seguimento e Reavaliação: Manter medidas recomendadas e acompanhamento." }
             }
         };
 
@@ -750,16 +800,20 @@
             }
 
             if (target.result) {
-                showResult(target.result, target.urgent);
+                sessionEvaluations.push({ text: target.result, isUrgent: target.urgent });
+                
+                if (target.next_eval) {
+                    renderNode(target.next_eval);
+                } else {
+                    showResult();
+                }
             } else if (target.next) {
                 renderNode(target.next);
             }
         }
 
-        function showResult(text, isUrgent = false) {
+        function showResult() {
             const app = document.getElementById('appContent');
-            
-            sessionEvaluations.push({ text, isUrgent });
 
             let html = `<h2 class="question-title" style="text-align: center; margin-bottom: 16px;">Recomendações Clínicas da Utente</h2>`;
             
