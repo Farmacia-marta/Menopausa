@@ -473,14 +473,20 @@
                 title: "Sintomas de ansiedade, stress ou alterações do humor?",
                 binary: true,
                 yes: { next: "sono_4" },
-                no: { result: "Perturbações do Sono: Considerar medidas de higiene do sono + Considerar melatonina.", next_eval: "seguimento_1" }
+                no: { 
+                    result: "Perturbações do Sono: Recomendar medidas de Higiene do sono + Considerar suplementação com Melatonina.", 
+                    next_eval: "seguimento_1" 
+                }
             },
             sono_4: {
                 tag: "Perturbações do Sono",
                 title: "Apresenta alteração marcada ou persistente, depressão ou ideação suicida?",
                 binary: true,
                 yes: { result: "Perturbações do Sono: Encaminhamento médico.", urgent: true },
-                no: { result: "Perturbações do Sono: Medidas de higiene do sono e estratégias de gestão do stress + Considerar Passiflora + Valeriana e Melatonina.", next_eval: "seguimento_1" }
+                no: { 
+                    result: "Perturbações do Sono: Recomendar medidas de higiene do sono e estratégias de gestão do stress + Considerar Valeriana officinalis + Melatonina.", 
+                    next_eval: "seguimento_1" 
+                }
             },
 
             /* 5. ALTERAÇÕES PSICOLÓGICAS */
@@ -562,8 +568,8 @@
                 tag: "Alterações Metabólicas",
                 title: "Reforçar intervenção nutricional.<br><br>Consumo adequado de peixe gordo? (2 a 3 vezes por semana)",
                 binary: true,
-                yes: { result: "Alterações Metabólicas: Manter aporte alimentar.", next_eval: "seguimento_1" },
-                no: { result: "Alterações Metabólicas: Considerar suplementação com Ómega 3 (DHA e EPA).", next_eval: "seguimento_1" }
+                yes: { result: "Alterações Metabólicas: Manter aporte alimentar.", next: "meta_3" },
+                no: { result: "Alterações Metabólicas: Considerar suplementação com Ómega 3 (DHA e EPA).", next: "meta_3" }
             },
             meta_3: {
                 tag: "Alterações Metabólicas",
@@ -578,14 +584,14 @@
                 tag: "Alterações Cutâneas",
                 title: "Proteção Solar Diária (Prevenção do Fotoenvelhecimento).<br><br>Apresenta secura e/ou prurido?",
                 binary: true,
-                yes: { result: "Alterações Cutâneas: Considerar emolientes de base pH e Ácido Hialurónico tópico (para reter humidade).", next_eval: "cut_2" },
+                yes: { result: "Alterações Cutâneas: Considerar emolientes de base pH e Ácido Hialurónico tópico (para reter humidade).", next: "cut_2" },
                 no: { next: "cut_2" }
             },
             cut_2: {
                 tag: "Alterações Cutâneas",
                 title: "Perda de elasticidade, rugas ou flacidez?",
                 binary: true,
-                yes: { result: "Alterações Cutâneas: Considerar dermocosméticos que estimulem a síntese de colagénio.", next_eval: "cut_3" },
+                yes: { result: "Alterações Cutâneas: Considerar dermocosméticos que estimulem a síntese de colagénio.", next: "cut_3" },
                 no: { next: "cut_3" }
             },
             cut_3: {
