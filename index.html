@@ -318,7 +318,11 @@
                 tag: "Sintomas Vasomotores",
                 title: "Histórico de cancro hormonodependente?",
                 binary: true,
-                yes: { result: "Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.", urgent: true },
+                yes: { 
+                    result: "Sintomas Vasomotores: Não recomendar fitoestrogénios sem avaliação médica.", 
+                    urgent: true,
+                    next: "vasomotores_2"
+                },
                 no: { next: "vasomotores_2" }
             },
             vasomotores_2: {
@@ -369,15 +373,24 @@
                 tag: "Sintomas Geniturinários",
                 title: "Aconselhar higiene íntima adequada e evitar produtos potencialmente irritantes.<br><br>Apresenta secura, ardor ou desconforto vaginal?",
                 binary: true,
-                yes: { result: "Sintomas Geniturinários: Hidratantes Vaginais Não Hormonais (com ácido hialurónico, ácido lático/biotina, pectina). Utilização regular 2 a 3 vezes por semana ou de acordo com a necessidade.", next_eval: "seguimento_1" },
+                yes: { 
+                    result: "Sintomas Geniturinários: Hidratantes Vaginais Não Hormonais (com ácido hialurónico, ácido lático/biotina, pectina). Utilização regular 2 a 3 vezes por semana ou de acordo com a necessidade.", 
+                    next_eval: "seguimento_1" 
+                },
                 no: { next: "genitu_4" }
             },
             genitu_4: {
                 tag: "Sintomas Geniturinários",
-                title: "Existe dor/desconforto apenas na coito (Dispareunia)?",
+                title: "Existe dor/desconforto apenas no coito (Dispareunia)?",
                 binary: true,
-                yes: { result: "Sintomas Geniturinários: Lubrificantes vaginais (Verificar compatibilidade com preservativos de látex). Utilizar durante a atividade sexual.", next_eval: "seguimento_1" },
-                no: { result: "Sintomas Geniturinários: Reavaliar sintomatologia.", next_eval: "seguimento_1" }
+                yes: { 
+                    result: "Sintomas Geniturinários: Lubrificantes vaginais (Verificar compatibilidade com preservativos de látex). Utilizar durante a atividade sexual.", 
+                    next_eval: "seguimento_1" 
+                },
+                no: { 
+                    result: "Sintomas Geniturinários: Reavaliar sintomatologia.", 
+                    next_eval: "seguimento_1" 
+                }
             },
 
             /* 3. SAÚDE ÓSSEA */
@@ -418,24 +431,26 @@
             },
             ossea_4: {
                 tag: "Saúde Óssea",
-                title: "Ingestão diária de Cálcio insuficiente (<1200 mg/dia)?",
+                title: "Ingestão dietética de Cálcio insuficiente (<1200 mg/dia)?",
                 binary: true,
-                yes: { next: "ossea_5" },
-                no: { next: "ossea_6" }
+                yes: { 
+                    result: "Saúde Óssea: Considerar suplementar cálcio para complementar a ingestão diária.", 
+                    next: "ossea_vit_d" 
+                },
+                no: { next: "ossea_vit_d" }
             },
-            ossea_5: {
+            ossea_vit_d: {
                 tag: "Saúde Óssea",
                 title: "Níveis de Vitamina D inferiores a 30 ng/mL?",
                 binary: true,
-                yes: { result: "Saúde Óssea: Considerar suplementar cálcio para complementar a ingestão diária + Considerar suplementar Vitamina D3 (800-2000 Unidades).", next_eval: "seguimento_1" },
-                no: { result: "Saúde Óssea: Considerar suplementar cálcio para complementar a ingestão diária + Manter aporte adequado de vitamina D.", next_eval: "seguimento_1" }
-            },
-            ossea_6: {
-                tag: "Saúde Óssea",
-                title: "Níveis de Vitamina D inferiores a 30 ng/mL?",
-                binary: true,
-                yes: { result: "Saúde Óssea: Considerar suplementar Vitamina D3 (800-2000 Unidades).", next_eval: "seguimento_1" },
-                no: { result: "Saúde Óssea: Manter aporte adequado de vitamina D.", next_eval: "seguimento_1" }
+                yes: { 
+                    result: "Saúde Óssea: Considerar suplementar Vitamina D3 (800-2000 Unidades).", 
+                    next_eval: "seguimento_1" 
+                },
+                no: { 
+                    result: "Saúde Óssea: Manter aporte adequado de vitamina D.", 
+                    next_eval: "seguimento_1" 
+                }
             },
 
             /* 4. PERTURBAÇÕES DO SONO */
@@ -802,7 +817,9 @@
             if (target.result) {
                 sessionEvaluations.push({ text: target.result, isUrgent: target.urgent });
                 
-                if (target.next_eval) {
+                if (target.next) {
+                    renderNode(target.next);
+                } else if (target.next_eval) {
                     renderNode(target.next_eval);
                 } else {
                     showResult();
